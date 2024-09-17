@@ -7,27 +7,43 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: HomePage(),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int count = 0;
+
   void decrement() {
-    print('Decrement');
+    setState(() {
+      if(count <= 0) {
+        return;
+      }
+      
+      count--;
+    });
+    print(count);
   }
 
   void increment() {
-    print('Increment');
+    setState(() {
+      count++;
+    });
+    print(count);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red,
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
@@ -46,10 +62,10 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(32),
               child: Text(
-                '0',
+                '$count',
                 style: TextStyle(fontSize: 100, color: Colors.white),
               ),
             ),
